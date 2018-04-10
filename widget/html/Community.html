@@ -14,24 +14,31 @@
         }
         /*导航栏*/
         span{
-          height: 28px;
+          height: 36px;
           width: 100%;
-          line-height: 28px;
+          line-height: 36px;
           font-size: 16px;
           background: #fff;
           border-top: 1px solid #e1e1e1;
-          border-bottom: 1px solid #e1e1e1;
         }
         span>ul>li{
           float: left;
           width: 33.33%;
           text-align: center;
           color: #808080;
+
         }
         span>ul>li.hover{
           color:#1a1a1a;
           font-style:normal;
           font-weight: bold;
+          border-bottom: 2px solid #000;
+        }
+        section{
+          margin-top: 38px;
+        }
+        section .maxbox{
+          border-top: 1px solid #808080
         }
         section>div{
           display: none;
@@ -174,7 +181,7 @@
 </head>
 <body>
   <!-- 导航栏 -->
-    <span id="span">
+    <span id="span" style="position:fixed;top:0;z-index:1;">
       <ul>
         <li class="hover menu">本周热门</li>
         <li class="menu">最新发布</li>
@@ -184,7 +191,7 @@
   <!-- 导航栏 -->
 
   <!-- main -->
-    <section class="aui-content">
+    <section class="aui-content" style="margin-top:38px;">
         <div class="maxbox current" id="maxbox">
             <div class="artical">
                 <div class="head">
@@ -339,13 +346,13 @@ apiready = function(){
                   html+='</div>';
                 html+='</div>';
               html+='</div>';
-              html+='<div class="text" onclick="openCommunityDetails()">';
+              html+='<div class="text" onclick="openCommunityDetails('+data[i]['tid']+')">';
                   html+='<div class="title">'+data[i]['subject']+'</div>';
                   html+='<div class="textmain">'+data[i]['message']+'</div>';
               html+='</div>';
               if(data[i]['images'].length){
                 html+='<div class="picture">';
-                  html+='<div><img src="'+data[i]['images']+'" alt="" onclick="openimg(this)"></div>'
+                  html+='<div><img src="'+data[i]['images']+'" alt="" onclick="openimg(this)" onerror="this.src=\'../images/about/Logo.png\'"></div>'
                 html+='</div>';
               }
               html+='<div class="list">';
@@ -382,15 +389,15 @@ apiready = function(){
       }
   }//
     //打开一个新窗口
-    function openCommunityDetails(){
+    function openCommunityDetails(tid){
           api.openWin({
           name: 'CommunityDetails',
-          url: 'CommunityDetails.html'
+          url: 'CommunityDetails.html',
+          pageParam: {tid:tid}
         });
       }
       //打开一张图片
     function openimg(ret) {
-        $api
   			var src = ret.getAttribute("src");
         //图片加载
         var photoBrowser = api.require('photoBrowser');
@@ -405,5 +412,7 @@ apiready = function(){
           }
         });
   		}
+
+
 </script>
 </html>
