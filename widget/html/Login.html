@@ -271,23 +271,27 @@
     function sub(){
       var accound = $api.val($api.byId('accound'))
       var password = $api.val($api.byId('password'))
-      api.ajax({
-        url: 'http://www.juzzn.com/appapi/login.php',
-        method: 'post',
-        data: {
-        values: {
-          'password':password,'username':accound
-        }
-        }
-        }, function(ret, err) {
+      if (!accound!=""||!password!=""){
+        alert('账号或者密码不可为空');
+      }else {
+        api.ajax({
+            url: 'http://www.juzzn.com/appapi/login.php',
+            method: 'post',
+            data: {
+              values: {
+                'password':password,'username':accound
+              }
+            }
+          }, function(ret, err) {
 
-        if (ret.errornum=='E00000') {
-            $api.setStorage('userdata',ret.data);//获取用户数据
-            window.location.href='../index.html';
-        } else {
-          alert('登录失败');
-        }
-      });
+            if (ret.errornum=='E00000') {
+                $api.setStorage('userdata',ret.data);//获取用户数据
+                window.location.href='../index.html';
+            } else {
+              alert('登录失败');
+            }
+        });
+      }
     }
 </script>
 </html>
